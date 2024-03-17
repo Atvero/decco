@@ -145,7 +145,7 @@ let resultFromJson = (okDecoder, errorDecoder, json) =>
     };
 
 let dictToJson = (encoder, dict) =>
-    dict->Js.Dict.map((. a) => encoder(a), _)->Js.Json.object_;
+    Js.Dict.map(~f=(. a) => encoder(a), dict)->Js.Json.object_;
 
 let dictFromJson = (decoder, json) =>
     switch (Js.Json.decodeObject(json)) {
