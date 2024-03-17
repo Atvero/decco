@@ -73,8 +73,8 @@ let unitToJson = () => Js.Json.number(0.0);
 let unitFromJson = (_) => Belt.Result.Ok(());
 
 let arrayToJson = (encoder, arr) =>
-    arr
-    |> Js.Array.map(encoder)
+
+    Belt.Array.map(arr,encoder)
     |> Js.Json.array;
 
 let arrayFromJson = (decoder, json) =>
@@ -87,7 +87,7 @@ let arrayFromJson = (decoder, json) =>
                     | (_, Belt.Result.Error({ path, _  } as error)) =>
                         Belt.Result.Error({ ...error, path: "[" ++ string_of_int(i) ++ "]" ++ path })
 
-                    | (Belt.Result.Ok(prev), Belt.Result.Ok(newVal)) => Belt.Result.Ok(Js.Array.concat([|newVal|], prev))
+                    | (Belt.Result.Ok(prev), Belt.Result.Ok(newVal)) => Belt.Result.Ok(Belt.Array.concat([|newVal|], prev))
                 };
             })
 
