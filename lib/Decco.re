@@ -28,8 +28,8 @@ let intToJson = (i) => i |> float_of_int |> Js.Json.number;
 let intFromJson = (j) =>
     switch (Js.Json.decodeNumber(j)) {
         | Some(f) =>
-            (float_of_int(Js.Math.floor(f)) == f) ?
-                Belt.Result.Ok(Js.Math.floor(f))
+            (float_of_int(Js.Math.floor_int(f)) == f) ?
+                Belt.Result.Ok(Js.Math.floor_int(f))
             : Belt.Result.Error({ path: "", message: "Not an integer", value: j })
 
         | _ => Belt.Result.Error({ path: "", message: "Not a number", value: j })
