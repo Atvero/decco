@@ -80,7 +80,7 @@ let arrayToJson = (encoder, arr) =>
 let arrayFromJson = (decoder, json) =>
     switch (Js.Json.decodeArray(json)) {
         | Some(arr) =>
-            Js.Array.reducei((acc, jsonI, i) => {
+            Belt.Array.reduceWithIndex(arr,Belt.Result.Ok([||]),(acc, jsonI, i) => {
                 switch (acc, decoder(jsonI)) {
                     | (Belt.Result.Error(_), _) => acc
 
@@ -89,7 +89,7 @@ let arrayFromJson = (decoder, json) =>
 
                     | (Belt.Result.Ok(prev), Belt.Result.Ok(newVal)) => Belt.Result.Ok(Js.Array.concat([|newVal|], prev))
                 };
-            }, Belt.Result.Ok([||]), arr)
+            })
 
         | None => Belt.Result.Error({ path: "", message: "Not an array", value: json })
     };
